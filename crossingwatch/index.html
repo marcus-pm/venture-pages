@@ -40,6 +40,8 @@ header.top .wrap{display:flex;align-items:center;justify-content:space-between;h
 h1{font-size:clamp(38px,5.2vw,64px);line-height:1.03;font-weight:600}
 .sub{font-size:17.5px;color:var(--tx-2);margin:0 0 26px}
 .ctas{display:flex;flex-wrap:wrap;gap:12px}
+.cta{display:flex;flex-direction:column;align-items:flex-start;gap:10px;max-width:36em}
+.next{margin:0;font-size:14.5px;line-height:1.45;color:var(--tx-2);font-weight:400}
 /* mock shell */
 .mock{margin:0;background:var(--panel);border:1px solid var(--line-2);border-radius:10px;overflow:hidden;box-shadow:0 40px 80px -40px rgba(0,0,0,.8),0 0 0 1px rgba(255,255,255,.02)}
 .mbar{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:11px 16px;border-bottom:1px solid var(--line-2);background:var(--panel-2);font:500 12.5px/1.3 var(--mono);color:var(--tx-2)}
@@ -65,7 +67,7 @@ h1{font-size:clamp(38px,5.2vw,64px);line-height:1.03;font-weight:600}
 .prob{font:400 16px/1.5 var(--mono);color:#ff9a85;margin:0 0 12px}
 .prob::before{content:"> ";color:var(--tx-3)}
 .ben{font-size:clamp(30px,3.6vw,44px);line-height:1.1;font-weight:600}
-.act{margin-top:30px}
+.act{margin-top:30px;display:flex;flex-direction:column;align-items:flex-start;gap:10px}
 /* radar vs optical */
 .two{display:grid;grid-template-columns:1fr 1fr}
 .two > div{position:relative}.two > div + div{border-left:1px solid var(--line-2)}
@@ -146,7 +148,7 @@ footer p{margin:0 0 8px;max-width:70em}
  .mbar{flex-wrap:wrap}
  .grid2{grid-template-columns:1fr}.formcard,.alertbox{padding:22px}
  .inline{flex-direction:column;align-items:stretch}.inline .btn{margin-top:0 !important;width:100%;justify-content:center}
- .ctas .btn{width:100%;justify-content:center}
+ .ctas .cta{width:100%}.ctas .btn{width:100%;justify-content:center}
  .doc .grid{grid-template-columns:1fr}.doc .dh{flex-direction:column}
  .sig{flex-direction:column}
 }
@@ -168,7 +170,7 @@ footer p{margin:0 0 8px;max-width:70em}
 <a class="skip" href="#main">Skip to content</a>
 <header class="top"><div class="wrap">
   <a class="logo" href="#top" aria-label="CrossingWatch, back to top"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><rect x=".5" y=".5" width="23" height="23" rx="4" fill="none" stroke="#f2b33d"/><path d="M3 15c3-2 5 2 9 0s6-2 9 0" stroke="#6cc4e8" stroke-width="1.6" fill="none"/><path d="M12 4v16" stroke="#f2b33d" stroke-width="1.6"/></svg>CrossingWatch <small>Early concept</small></a>
-  <a class="btn sm" href="#backtest" data-cta="nav">Backtest a past storm</a>
+  <a class="btn sm" href="#backtest" data-cta="nav">Backtest a storm</a>
 </div></header>
 
 <main id="main">
@@ -179,7 +181,10 @@ footer p{margin:0 0 8px;max-width:70em}
       <h1 id="h1">After the storm, know which crossings to check first.</h1></div>
       <div>
         <p class="sub">Cloud-penetrating satellite radar screens your watercourse crossings and slopes after every major rain or high-water event, then ranks them with before and after evidence.</p>
-        <div class="ctas"><a class="btn" href="#backtest" data-cta="hero">Backtest a past storm, free <span aria-hidden="true">→</span></a><a class="btn ghost" href="#freshet" data-cta="hero_freshet">2027 freshet alerts</a></div>
+        <div class="ctas"><div class="cta">
+            <a class="btn" href="#backtest" data-cta="hero">Backtest a storm</a>
+            <p class="next">Pick a past event and we’ll rank your crossings by likely damage.</p>
+          </div></div>
       </div>
     </div>
     <figure class="mock" aria-label="Illustrative before and after radar view of fictional crossing WC-112">
@@ -223,7 +228,7 @@ footer p{margin:0 0 8px;max-width:70em}
         <div><svg viewBox="0 0 600 340" aria-hidden="true"><use href="#land" width="600" height="400" y="-30"/><path d="M-10 100 C150 140 260 90 330 140 S500 210 610 190 L610 270 C500 290 400 260 320 220 S150 200 -10 190 Z" fill="#1b2230"/><path d="M290 -10 L340 350" stroke="#f2b33d" stroke-width="3" stroke-dasharray="10 6"/></svg><span class="cap">Radar<span>Day or night, any weather</span></span></div>
       </div>
     </figure>
-    <div class="act"><a class="btn" href="#backtest" data-cta="b1">See a past storm through the cloud</a></div>
+    <div class="act"><a class="btn" href="#backtest" data-cta="b1">Backtest a storm</a><p class="next">Pick a past event and we’ll rank your crossings by likely damage.</p></div>
   </div>
 </section>
 
@@ -245,7 +250,7 @@ footer p{margin:0 0 8px;max-width:70em}
         </tbody>
       </table></div>
     </figure>
-    <div class="act"><a class="btn" href="#backtest" data-cta="b2">Rank your crossings for a past storm</a></div>
+    <div class="act"><a class="btn" href="#backtest" data-cta="b2">Backtest a storm</a><p class="next">Pick a past event and we’ll rank your crossings by likely damage.</p></div>
   </div>
 </section>
 
@@ -278,7 +283,7 @@ footer p{margin:0 0 8px;max-width:70em}
         <div class="sig"><span>Prepared by CrossingWatch (draft)</span><span>Reviewed: ______________________ P.Eng.</span></div>
       </div>
     </figure>
-    <div class="act"><a class="btn" href="#backtest" data-cta="b3">Get a draft record for a past storm</a></div>
+    <div class="act"><a class="btn" href="#backtest" data-cta="b3">Backtest a storm</a><p class="next">Pick a past event and we’ll rank your crossings by likely damage.</p></div>
   </div>
 </section>
 
@@ -292,8 +297,8 @@ footer p{margin:0 0 8px;max-width:70em}
 <section class="signup" id="backtest" aria-labelledby="bt-h">
   <div class="wrap">
     <div>
-      <p class="kicker">// Free backtest</p>
-      <h2 id="bt-h">Backtest a past storm on your crossings, free.</h2>
+      <p class="kicker">// Backtest</p>
+      <h2 id="bt-h">Backtest a storm on your crossings.</h2>
       <p class="lead">Pick an event you already know the outcome of.</p>
     </div>
     <div class="formcard">
@@ -301,23 +306,21 @@ footer p{margin:0 0 8px;max-width:70em}
         <input type="hidden" name="experiment" value="crossingwatch">
         <input type="hidden" name="utm_content" data-utm="utm_content">
         <div class="grid2">
-          <div class="field"><label for="f-name">Name</label><input id="f-name" name="name" autocomplete="name" required data-label="Name" data-firstname aria-describedby="e-name"><span class="err" id="e-name" aria-live="polite"></span></div>
           <div class="field"><label for="f-email">Work email</label><input id="f-email" name="email" type="email" autocomplete="email" required data-label="Work email" aria-describedby="e-email"><span class="err" id="e-email" aria-live="polite"></span></div>
-          <div class="field"><label for="f-co">Company</label><input id="f-co" name="company" autocomplete="organization" required data-label="Company" aria-describedby="e-co"><span class="err" id="e-co" aria-live="polite"></span></div>
-          <div class="field"><label for="f-role">Role</label><input id="f-role" name="role" autocomplete="organization-title" required data-label="Role" placeholder="e.g. Integrity Engineer" aria-describedby="e-role"><span class="err" id="e-role" aria-live="polite"></span></div>
-          <div class="field"><label for="f-n">Approx. number of crossings</label><input id="f-n" name="crossings" type="number" min="1" step="1" inputmode="numeric" required data-label="Approx. number of crossings" aria-describedby="e-n"><span class="err" id="e-n" aria-live="polite"></span></div>
-          <div class="field"><label for="f-ev">Event of interest</label><input id="f-ev" name="event" required data-label="Event of interest" placeholder="Date or basin" aria-describedby="e-ev"><span class="err" id="e-ev" aria-live="polite"></span></div>
-          <div class="field full"><label for="f-up">Crossing inventory <span class="opt">(optional KML, SHP or CSV)</span></label><input id="f-up" name="inventory" type="file" accept=".kml,.kmz,.shp,.zip,.csv" aria-describedby="h-up"><span class="hint" id="h-up">For a shapefile, zip the .shp with its companion files.</span></div>
+          <div class="field"><label for="f-ev">Which storm or flood? (date or basin)</label><input id="f-ev" name="event" required data-label="Which storm or flood" placeholder="Date or basin" aria-describedby="e-ev"><span class="err" id="e-ev" aria-live="polite"></span></div>
         </div>
         <div class="form-actions">
-          <button class="btn" type="submit" data-cta="form">Request my free backtest</button>
+          <div class="cta">
+            <button class="btn" type="submit" data-cta="form">Backtest a storm</button>
+            <p class="next">Pick a past event and we’ll rank your crossings by likely damage.</p>
+          </div>
           <span class="form-summary" role="alert"></span>
         </div>
         <p class="fine">Early concept. This form doesn’t send anything yet.</p>
       </form>
       <div class="thanks" id="thanks" tabindex="-1" role="status" hidden>
         <h3>Thanks<span data-fill="name"></span>.</h3>
-        <p>CrossingWatch is an early concept. Nothing was sent and no file was uploaded from this page.</p>
+        <p>CrossingWatch is an early concept. Nothing was sent from this page.</p>
       </div>
     </div>
   </div>
@@ -335,7 +338,7 @@ footer p{margin:0 0 8px;max-width:70em}
           <input type="hidden" name="experiment" value="crossingwatch_freshet">
           <div class="inline">
             <div class="field"><label for="f-alert">Work email</label><input id="f-alert" name="email" type="email" autocomplete="email" required data-label="Work email" aria-describedby="e-alert"><span class="err" id="e-alert" aria-live="polite"></span></div>
-            <button class="btn ghost" type="submit" style="margin-top:27px;height:46px" data-cta="freshet">Notify me</button>
+            <button class="btn ghost" type="submit" style="margin-top:27px;height:46px" data-cta="freshet">Get freshet alerts</button>
           </div>
           <span class="form-summary" role="alert"></span>
         </form>
@@ -426,12 +429,6 @@ footer p{margin:0 0 8px;max-width:70em}
         thanks.focus();
       }
       form.reset(); /* nothing is kept */
-    });
-  });
-  document.querySelectorAll('[data-prefer-call]').forEach(function (a) {
-    a.addEventListener('click', function () {
-      var box = document.getElementById(a.getAttribute('data-prefer-call'));
-      if (box) box.checked = true;
     });
   });
 })();

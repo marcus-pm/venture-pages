@@ -30,6 +30,9 @@ header.top .wrap{display:flex;align-items:center;justify-content:space-between;h
 .pill{font:500 12px/1 var(--sans);color:var(--ink-2);border:1px solid var(--line-2);padding:5px 9px;border-radius:99px}
 .btn{display:inline-flex;align-items:center;gap:8px;background:var(--plum);color:#fff;font:600 15px/1 var(--sans);padding:13px 20px;border-radius:99px;text-decoration:none;border:0;cursor:pointer}
 .btn:hover{background:var(--plum-d);color:#fff}.btn.sm{padding:9px 15px;font-size:14px}
+.cta{display:flex;flex-direction:column;align-items:flex-start;gap:10px;max-width:36em}
+.hero .cta{align-items:center;text-align:center;margin:0 auto}
+.next{margin:0;font-size:14.5px;line-height:1.45;color:var(--ink-2);font-weight:400}
 /* hero */
 .hero{text-align:center;padding:96px 0 0;background:linear-gradient(#fff 0,#fff 55%,var(--bg-2) 55%)}
 .eyebrow{display:inline-block;font-size:14px;color:var(--ink-2);background:var(--bg-2);border:1px solid var(--line);border-radius:99px;padding:6px 14px;margin:0 0 26px}
@@ -65,7 +68,7 @@ h1{font-size:clamp(42px,6.4vw,78px);line-height:1;font-weight:650}
 .n{font:600 13px/1 var(--sans);color:var(--plum);margin:0 0 18px}
 .prob{font-size:19px;color:var(--ink-2);margin:0 0 10px}
 .ben{font-size:clamp(32px,4vw,48px);line-height:1.06;font-weight:650}
-.act{text-align:center;margin-top:36px}
+.act{text-align:center;margin-top:36px;display:flex;flex-direction:column;align-items:center;gap:10px}
 .scroll{overflow-x:auto}
 table.ll{width:100%;border-collapse:collapse;font-size:14.5px;min-width:640px}
 .ll th{text-align:left;font:600 12px/1 var(--sans);color:var(--ink-3);padding:12px 18px;border-bottom:1px solid var(--line);background:#fbfafc}
@@ -116,13 +119,11 @@ input:focus,select:focus,textarea:focus{border-color:var(--plum);outline:3px sol
 .form-summary{font-size:14px;color:var(--bad)}
 .fine{font-size:13px;color:var(--ink-3);margin:16px 0 0}
 .thanks{text-align:center;padding:12px 0}.thanks h3{font-size:30px;font-weight:650;margin-bottom:10px}.thanks p{color:var(--ink-2);margin:0}
-.nations{padding:88px 0;background:var(--sage)}
-.nations .grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:56px;align-items:start}
+.nations{padding:72px 0;background:var(--sage)}
+.nations .wrap{max-width:720px}
 .nations .k{font:600 13px/1 var(--sans);color:#3f5a3a;margin:0 0 16px}
 .nations h2{font-size:clamp(28px,3.2vw,38px);line-height:1.12;font-weight:650}
-.nations p{color:#3f4a3d}
-.nations .formcard{border-color:#d6ddd2;box-shadow:none}
-.nations .btn{background:#2f4a2c}.nations .btn:hover{background:#22371f}
+.nations p{color:#3f4a3d;margin:16px 0 0}
 footer{padding:36px 0 48px;font-size:13.5px;color:var(--ink-3)}
 footer p{margin:0 0 8px;max-width:70em}
 .fn{margin-top:16px;padding-top:14px;border-top:1px solid var(--line);font-size:12.5px}
@@ -134,7 +135,6 @@ footer p{margin:0 0 8px;max-width:70em}
  .hero{padding:60px 0 0}.hero .mockwrap{margin-top:44px;padding-bottom:64px}
  .block{padding:64px 0}
  .exp{grid-template-columns:1fr}.formats{border-right:0;border-bottom:1px solid var(--line)}
- .nations .grid{grid-template-columns:1fr;gap:28px}
 }
 @media (max-width:620px){
  .wrap,.narrow{padding:0 18px}.pill{display:none}
@@ -156,7 +156,7 @@ footer p{margin:0 0 8px;max-width:70em}
 <a class="skip" href="#main">Skip to content</a>
 <header class="top"><div class="wrap">
   <a class="logo" href="#top" aria-label="Referral-Ready, back to top"><svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><rect x="1" y="1" width="20" height="20" rx="6" fill="#5b2b6e"/><path d="M6.5 11.3l3 3 6-6.6" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>Referral-Ready <span class="pill">Early concept</span></a>
-  <a class="btn sm" href="#precheck" data-cta="nav">Pre-check 5 submissions</a>
+  <a class="btn sm" href="#precheck" data-cta="nav">Pre-check submissions</a>
 </div></header>
 
 <main id="main">
@@ -165,7 +165,10 @@ footer p{margin:0 0 8px;max-width:70em}
     <p class="eyebrow">For Alberta land, regulatory &amp; consultation coordinators</p>
     <h1 id="h1">ACO submissions<br>that don’t bounce.</h1>
     <p class="sub">Check legal locations, project geometry and package completeness before you submit, then send a clean, standardized package Nations can review.</p>
-    <a class="btn" href="#precheck" data-cta="hero">Pre-check your next 5 ACO submissions, free</a>
+    <div class="cta">
+      <a class="btn" href="#precheck" data-cta="hero">Pre-check submissions</a>
+      <p class="next">Send your next 5 and we’ll flag gaps before ACO does.</p>
+    </div>
     <div class="mockwrap">
       <figure class="mock" aria-label="Illustrative pre-check of a fictional application showing two issues">
         <div class="mbar"><span><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><b>Pre-check</b> · Application RR-SAMPLE-014</span><span class="sample">Illustrative — not real data</span></div>
@@ -227,7 +230,7 @@ footer p{margin:0 0 8px;max-width:70em}
         </tbody>
       </table></div>
     </figure>
-    <div class="act"><a class="btn" href="#precheck" data-cta="b1">Check your legal locations</a></div>
+    <div class="act"><a class="btn" href="#precheck" data-cta="b1">Pre-check submissions</a><p class="next">Send your next 5 and we’ll flag gaps before ACO does.</p></div>
   </div>
 </section>
 
@@ -247,7 +250,7 @@ footer p{margin:0 0 8px;max-width:70em}
         <div class="item"><i class="ic x" aria-hidden="true">✕</i><div>Record of consultation<br><span>Needs update before submitting</span></div><span class="tag x">Fix</span></div>
       </div>
     </figure>
-    <div class="act"><a class="btn" href="#precheck" data-cta="b2">Check your next package</a></div>
+    <div class="act"><a class="btn" href="#precheck" data-cta="b2">Pre-check submissions</a><p class="next">Send your next 5 and we’ll flag gaps before ACO does.</p></div>
   </div>
 </section>
 
@@ -279,7 +282,7 @@ footer p{margin:0 0 8px;max-width:70em}
 }</pre>
       </div>
     </figure>
-    <div class="act"><a class="btn" href="#precheck" data-cta="b3">Pre-check 5 submissions, free</a></div>
+    <div class="act"><a class="btn" href="#precheck" data-cta="b3">Pre-check submissions</a><p class="next">Send your next 5 and we’ll flag gaps before ACO does.</p></div>
   </div>
 </section>
 
@@ -293,66 +296,41 @@ footer p{margin:0 0 8px;max-width:70em}
 <section class="signup" id="precheck" aria-labelledby="pc-form-h">
   <div class="narrow">
     <div class="head">
-      <h2 id="pc-form-h">Pre-check your next 5 ACO submissions, free.</h2>
-      
+      <h2 id="pc-form-h">Pre-check your next 5 submissions.</h2>
     </div>
     <div class="formcard">
       <form data-fakedoor data-thanks="thanks" novalidate>
         <input type="hidden" name="experiment" value="referral-ready">
         <input type="hidden" name="utm_content" data-utm="utm_content">
         <div class="grid2">
-          <div class="field"><label for="f-name">Name</label><input id="f-name" name="name" autocomplete="name" required data-label="Name" data-firstname aria-describedby="e-name"><span class="err" id="e-name" aria-live="polite"></span></div>
           <div class="field"><label for="f-email">Work email</label><input id="f-email" name="email" type="email" autocomplete="email" required data-label="Work email" aria-describedby="e-email"><span class="err" id="e-email" aria-live="polite"></span></div>
-          <div class="field"><label for="f-org">Organization</label><input id="f-org" name="organization" autocomplete="organization" required data-label="Organization" aria-describedby="e-org"><span class="err" id="e-org" aria-live="polite"></span></div>
-          <div class="field"><label for="f-role">Role</label><input id="f-role" name="role" autocomplete="organization-title" required data-label="Role" placeholder="e.g. Land Agent" aria-describedby="e-role"><span class="err" id="e-role" aria-live="polite"></span></div>
           <div class="field"><label for="f-vol">Applications per year</label>
             <select id="f-vol" name="apps_per_year" required data-label="Applications per year" aria-describedby="e-vol">
               <option value="">Select a range</option><option>1–10</option><option>11–50</option><option>51–200</option><option>More than 200</option>
             </select><span class="err" id="e-vol" aria-live="polite"></span></div>
-          <div class="field"><label for="f-disp">Types of dispositions</label><input id="f-disp" name="dispositions" required data-label="Types of dispositions" placeholder="e.g. MSL, LOC, PIL" aria-describedby="e-disp"><span class="err" id="e-disp" aria-live="polite"></span></div>
-          <div class="field full"><label for="f-up">Upcoming application <span class="opt">(optional upload)</span></label><input id="f-up" name="upload" type="file" accept=".zip,.shp,.kml,.kmz,.pdf,.csv" aria-describedby="h-up"><span class="hint" id="h-up">A shapefile (zipped), KML, PDF or CSV.</span></div>
         </div>
         <div class="form-actions">
-          <button class="btn" type="submit" data-cta="form">Request my free pre-check</button>
+          <div class="cta">
+            <button class="btn" type="submit" data-cta="form">Pre-check submissions</button>
+            <p class="next">Send your next 5 and we’ll flag gaps before ACO does.</p>
+          </div>
           <span class="form-summary" role="alert"></span>
         </div>
         <p class="fine">Early concept. This form doesn’t send anything yet.</p>
       </form>
       <div class="thanks" id="thanks" tabindex="-1" role="status" hidden>
         <h3>Thanks<span data-fill="name"></span>.</h3>
-        <p>Referral-Ready is an early concept. Nothing was sent and no file was uploaded from this page.</p>
+        <p>Referral-Ready is an early concept. Nothing was sent from this page.</p>
       </div>
     </div>
   </div>
 </section>
 
 <section class="nations" id="nations" aria-labelledby="nat-h">
-  <div class="wrap grid">
-    <div>
-      <p class="k">For First Nation and Métis consultation offices</p>
-      <h2 id="nat-h">Work with us on the package format.</h2>
-      <p>If your office receives ACO referrals, help shape what a standard package should contain. No cost to consultation offices.</p>
-    </div>
-    <div class="formcard">
-      <form data-fakedoor data-thanks="thanks-n" novalidate>
-        <input type="hidden" name="experiment" value="referral-ready_nations">
-        <div class="grid2">
-          <div class="field"><label for="n-name">Name</label><input id="n-name" name="name" autocomplete="name" required data-label="Name" data-firstname aria-describedby="en-name"><span class="err" id="en-name" aria-live="polite"></span></div>
-          <div class="field"><label for="n-email">Email</label><input id="n-email" name="email" type="email" autocomplete="email" required data-label="Email" aria-describedby="en-email"><span class="err" id="en-email" aria-live="polite"></span></div>
-          <div class="field"><label for="n-org">Nation or organization</label><input id="n-org" name="organization" required data-label="Nation or organization" aria-describedby="en-org"><span class="err" id="en-org" aria-live="polite"></span></div>
-          <div class="field"><label for="n-role">Role <span class="opt">(optional)</span></label><input id="n-role" name="role"></div>
-          <div class="field full"><label for="n-msg">Anything you’d like us to know <span class="opt">(optional)</span></label><textarea id="n-msg" name="message"></textarea></div>
-        </div>
-        <div class="form-actions">
-          <button class="btn" type="submit" data-cta="nations">Get in touch</button>
-          <span class="form-summary" role="alert"></span>
-        </div>
-      </form>
-      <div class="thanks" id="thanks-n" tabindex="-1" role="status" hidden>
-        <h3>Thank you<span data-fill="name"></span>.</h3>
-        <p>This is an early concept, so nothing was sent from this page.</p>
-      </div>
-    </div>
+  <div class="wrap">
+    <p class="k">For First Nation and Métis consultation offices</p>
+    <h2 id="nat-h">The package format will be shaped with Nations.</h2>
+    <p>A contact for consultation offices will be added here. We’re not collecting messages on this page yet.</p>
   </div>
 </section>
 
@@ -435,12 +413,6 @@ footer p{margin:0 0 8px;max-width:70em}
         thanks.focus();
       }
       form.reset(); /* nothing is kept */
-    });
-  });
-  document.querySelectorAll('[data-prefer-call]').forEach(function (a) {
-    a.addEventListener('click', function () {
-      var box = document.getElementById(a.getAttribute('data-prefer-call'));
-      if (box) box.checked = true;
     });
   });
 })();

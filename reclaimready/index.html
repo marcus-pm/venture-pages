@@ -36,6 +36,8 @@ header.top .wrap{display:flex;align-items:center;justify-content:space-between;h
 h1{font-size:clamp(40px,5.6vw,68px);line-height:1.02}
 .sub{font-size:18px;color:var(--ink-2);margin:0 0 26px}
 .ctas{display:flex;flex-wrap:wrap;align-items:center;gap:14px 22px}
+.cta{display:flex;flex-direction:column;align-items:flex-start;gap:10px;max-width:36em}
+.next{margin:0;font-size:14.5px;line-height:1.45;color:var(--ink-2);font-weight:400}
 /* mock shell */
 .mock{background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:0 1px 0 rgba(0,0,0,.03),0 30px 60px -36px rgba(28,35,31,.45);overflow:hidden;font-family:var(--sans);color:var(--ink)}
 .mbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 18px;border-bottom:1px solid var(--line);background:#f2efe6;font-size:13px;color:var(--ink-2)}
@@ -65,7 +67,7 @@ table.rep{width:100%;border-collapse:collapse;font-size:14px;min-width:760px}
 .num{font:italic 400 16px/1 var(--serif);color:var(--ink-3);margin:0 0 18px}
 .prob{font:400 italic 22px/1.4 var(--serif);color:var(--rust);margin:0 0 10px}
 .ben{font-size:clamp(32px,3.8vw,46px);line-height:1.08}
-.act{margin-top:32px}
+.act{margin-top:32px;display:flex;flex-direction:column;align-items:flex-start;gap:10px}
 /* evidence pack */
 .pack{display:grid;grid-template-columns:1.25fr 1fr}
 .tiles{padding:22px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;border-right:1px solid var(--line)}
@@ -155,7 +157,7 @@ footer p{margin:0 0 10px;max-width:64em}
 <a class="skip" href="#main">Skip to content</a>
 <header class="top"><div class="wrap">
   <a class="logo" href="#top" aria-label="ReclaimReady, back to top"><svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><rect x="1" y="1" width="24" height="24" rx="5" fill="#2c5a39"/><path d="M7 17.5c4-.5 7-3.5 8.5-9.5M9.5 9.5c2 0 3 1 3.5 2.5" stroke="#f5f2ea" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M6 19.5h14" stroke="#f5f2ea" stroke-width="2" stroke-linecap="round"/></svg>ReclaimReady <span class="tag">Early concept</span></a>
-  <a class="btn sm" href="#check" data-cta="nav">Get a free readiness check</a>
+  <a class="btn sm" href="#check" data-cta="nav">Check my sites</a>
 </div></header>
 
 <main id="main">
@@ -166,8 +168,10 @@ footer p{margin:0 0 10px;max-width:64em}
       <div>
         <p class="sub">ReclaimReady screens your inactive inventory with multi-year satellite and LiDAR evidence, ranks every site by DSA readiness, and lines it up against your Directive&nbsp;088 deadlines.<sup><a href="#fn1" aria-label="Source 1">1</a></sup></p>
         <div class="ctas">
-          <a class="btn" href="#check" data-cta="hero">Get a free readiness check on 50 of your sites <span aria-hidden="true">→</span></a>
-          <a class="link2" href="#check" data-prefer-call="prefer-call" data-cta="hero_call">Or book a 20-minute call</a>
+          <div class="cta">
+            <a class="btn" href="#check" data-cta="hero">Check my sites</a>
+            <p class="next">We’ll send an evidence summary for 50 sites, including which ones hit Dec 31.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -220,7 +224,7 @@ footer p{margin:0 0 10px;max-width:64em}
         </div>
       </div>
     </figure>
-    <div class="act"><a class="btn" href="#check" data-cta="b1">Get evidence packs for 50 sites</a></div>
+    <div class="act"><a class="btn" href="#check" data-cta="b1">Check my sites</a><p class="next">We’ll send an evidence summary for 50 sites, including which ones hit Dec 31.</p></div>
   </div>
 </section>
 
@@ -240,7 +244,7 @@ footer p{margin:0 0 10px;max-width:64em}
       </div>
       <div class="legend"><span class="tier t1">Ready for DSA</span><span class="tier t2">Needs another season</span><span class="tier t3">Needs intervention</span></div>
     </figure>
-    <div class="act"><a class="btn" href="#check" data-cta="b2">See your Dec 31 sites</a></div>
+    <div class="act"><a class="btn" href="#check" data-cta="b2">Check my sites</a><p class="next">We’ll send an evidence summary for 50 sites, including which ones hit Dec 31.</p></div>
   </div>
 </section>
 
@@ -266,7 +270,7 @@ footer p{margin:0 0 10px;max-width:64em}
         </ul></div>
       </div>
     </figure>
-    <div class="act"><a class="btn" href="#check" data-cta="b3">Plan DSAs with the evidence</a></div>
+    <div class="act"><a class="btn" href="#check" data-cta="b3">Check my sites</a><p class="next">We’ll send an evidence summary for 50 sites, including which ones hit Dec 31.</p></div>
   </div>
 </section>
 
@@ -280,35 +284,31 @@ footer p{margin:0 0 10px;max-width:64em}
 <section class="signup" id="check" aria-labelledby="check-h">
   <div class="wrap">
     <div>
-      <h2 id="check-h">Get a free readiness check on 50 of your sites.</h2>
-      <p class="lead">Prefer to talk first? Tick the box for a 20-minute call.</p>
+      <h2 id="check-h">Check 50 of your sites.</h2>
     </div>
     <div class="formcard">
       <form data-fakedoor data-thanks="thanks" novalidate aria-describedby="form-note">
         <input type="hidden" name="experiment" value="reclaimready">
         <input type="hidden" name="utm_content" data-utm="utm_content">
         <div class="grid2">
-          <div class="field"><label for="f-name">Name</label><input id="f-name" name="name" autocomplete="name" required data-label="Name" data-firstname aria-describedby="e-name"><span class="err" id="e-name" aria-live="polite"></span></div>
           <div class="field"><label for="f-email">Work email</label><input id="f-email" name="email" type="email" autocomplete="email" required data-label="Work email" aria-describedby="e-email"><span class="err" id="e-email" aria-live="polite"></span></div>
-          <div class="field"><label for="f-co">Company</label><input id="f-co" name="company" autocomplete="organization" required data-label="Company" aria-describedby="e-co"><span class="err" id="e-co" aria-live="polite"></span></div>
-          <div class="field"><label for="f-role">Role</label><input id="f-role" name="role" autocomplete="organization-title" required data-label="Role" placeholder="e.g. Closure Manager" aria-describedby="e-role"><span class="err" id="e-role" aria-live="polite"></span></div>
-          <div class="field"><label for="f-sites">Number of inactive sites</label><input id="f-sites" name="inactive_sites" type="number" min="1" step="1" inputmode="numeric" required data-label="Number of inactive sites" aria-describedby="e-sites"><span class="err" id="e-sites" aria-live="polite"></span></div>
-          <div class="field"><label for="f-year">Nearest D088 deadline year</label>
-            <select id="f-year" name="d088_year" required data-label="Nearest D088 deadline year" aria-describedby="e-year">
-              <option value="">Select a year</option><option>2026</option><option>2027</option><option>2028</option><option>2029</option><option>2030 or later</option><option>Not sure</option>
-            </select><span class="err" id="e-year" aria-live="polite"></span></div>
-          <div class="field full"><label for="f-csv">Site list <span class="opt">(optional CSV)</span></label><input id="f-csv" name="site_list" type="file" accept=".csv,text/csv" aria-describedby="h-csv"><span class="hint" id="h-csv">One row per site, with a UWI or surface location.</span></div>
-          <div class="field full"><label class="check" for="prefer-call"><input id="prefer-call" name="prefer_call" type="checkbox"> I’d rather start with a 20-minute call</label></div>
+          <div class="field"><label for="f-sites">Number of inactive sites</label>
+            <select id="f-sites" name="inactive_sites" required data-label="Number of inactive sites" aria-describedby="e-sites">
+              <option value="">Select a range</option><option>1–50</option><option>51–250</option><option>251–1,000</option><option>More than 1,000</option><option>Not sure</option>
+            </select><span class="err" id="e-sites" aria-live="polite"></span></div>
         </div>
         <div class="form-actions">
-          <button class="btn" type="submit" data-cta="form">Get my free readiness check</button>
+          <div class="cta">
+            <button class="btn" type="submit" data-cta="form">Check my sites</button>
+            <p class="next">We’ll send an evidence summary for 50 sites, including which ones hit Dec 31.</p>
+          </div>
           <span class="form-summary" role="alert"></span>
         </div>
         <p class="fine" id="form-note">Early concept. This form doesn’t send anything yet.</p>
       </form>
       <div class="thanks" id="thanks" tabindex="-1" role="status" hidden>
         <h3>Thanks<span data-fill="name"></span>.</h3>
-        <p>ReclaimReady is an early concept. Nothing was sent and no file was uploaded from this page.</p>
+        <p>ReclaimReady is an early concept. Nothing was sent from this page.</p>
       </div>
     </div>
   </div>
@@ -394,12 +394,6 @@ footer p{margin:0 0 10px;max-width:64em}
         thanks.focus();
       }
       form.reset(); /* nothing is kept */
-    });
-  });
-  document.querySelectorAll('[data-prefer-call]').forEach(function (a) {
-    a.addEventListener('click', function () {
-      var box = document.getElementById(a.getAttribute('data-prefer-call'));
-      if (box) box.checked = true;
     });
   });
 })();
