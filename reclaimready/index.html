@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="en-CA">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>ReclaimReady: know which wellsites will pass before you send a crew</title>
+<meta name="description" content="Readiness screening for Alberta closure and reclamation teams. Early concept.">
+<!-- FAKE-DOOR PROTOTYPE. Local file only. No analytics, no external requests; forms send nothing. All product visuals are illustrative mockups with fictional data. -->
+<style>
+@font-face{font-family:"Newsreader";src:url(assets/newsreader.woff2) format("woff2");font-weight:200 800;font-display:swap}
+@font-face{font-family:"Public Sans";src:url(assets/publicsans.woff2) format("woff2");font-weight:100 900;font-display:swap}
+:root{--paper:#f5f2ea;--paper-2:#ece7da;--card:#fbfaf6;--ink:#1c231f;--ink-2:#4a544e;--ink-3:#69726c;--line:#d6d0c1;
+--green:#2c5a39;--green-d:#1f4229;--green-t:#e1eadc;--amber:#9a6512;--amber-t:#f6e9cf;--rust:#8f3b24;--rust-t:#f3dfd6;
+--serif:"Newsreader",Georgia,serif;--sans:"Public Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 17px/1.55 var(--sans)}
+a{color:var(--green-d);text-underline-offset:3px}
+:focus-visible{outline:3px solid var(--green);outline-offset:3px;border-radius:2px}
+.skip{position:absolute;left:-9999px;top:8px;background:var(--ink);color:#fff;padding:8px 14px;z-index:10}.skip:focus{left:12px}
+.wrap{max-width:1160px;margin:0 auto;padding:0 28px}
+h1,h2,h3{font-family:var(--serif);font-weight:500;letter-spacing:-.015em;margin:0;text-wrap:balance}
+sup a{text-decoration:none;font:600 11px/1 var(--sans);color:var(--ink-3);padding:0 1px}
+header.top{position:sticky;top:0;z-index:5;background:rgba(245,242,234,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;height:62px}
+.logo{display:flex;align-items:center;gap:10px;font:600 20px/1 var(--serif);color:var(--ink);text-decoration:none}
+.tag{font:600 11px/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--green-d);background:var(--green-t);padding:5px 8px;border-radius:99px}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--green);color:#fff;font:600 15px/1 var(--sans);padding:13px 18px;border-radius:6px;text-decoration:none;border:0;cursor:pointer}
+.btn:hover{background:var(--green-d);color:#fff}.btn.sm{padding:10px 14px;font-size:14px}
+.link2{font-weight:600;font-size:15px}
+/* hero */
+.hero{padding:84px 0 0}
+.hero .lede{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:end;margin-bottom:56px}
+h1{font-size:clamp(40px,5.6vw,68px);line-height:1.02}
+.sub{font-size:18px;color:var(--ink-2);margin:0 0 26px}
+.ctas{display:flex;flex-wrap:wrap;align-items:center;gap:14px 22px}
+/* mock shell */
+.mock{background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:0 1px 0 rgba(0,0,0,.03),0 30px 60px -36px rgba(28,35,31,.45);overflow:hidden;font-family:var(--sans);color:var(--ink)}
+.mbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 18px;border-bottom:1px solid var(--line);background:#f2efe6;font-size:13px;color:var(--ink-2)}
+.mbar b{color:var(--ink);font-weight:600}
+.sample{font:600 11px/1 var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--amber);background:var(--amber-t);border:1px solid #e4cf9f;padding:5px 8px;border-radius:4px;white-space:nowrap}
+.tier{display:inline-flex;align-items:center;gap:6px;font:600 12.5px/1 var(--sans);padding:6px 9px;border-radius:99px;white-space:nowrap}
+.tier::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+.t1{color:var(--green-d);background:var(--green-t)}.t2{color:#7a4f0c;background:var(--amber-t)}.t3{color:var(--rust);background:var(--rust-t)}
+/* report */
+.sum{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--line)}
+.sum div{padding:16px 20px}.sum div+div{border-left:1px solid var(--line)}
+.sum small{display:block;font-size:12px;color:var(--ink-3);margin-bottom:4px}
+.sum strong{font:500 30px/1 var(--serif)}
+.scroll{overflow-x:auto}
+table.rep{width:100%;border-collapse:collapse;font-size:14px;min-width:760px}
+.rep th{text-align:left;font-weight:600;font-size:12px;color:var(--ink-3);padding:11px 20px;border-bottom:1px solid var(--line);background:#f8f6f0}
+.rep td{padding:12px 20px;border-bottom:1px solid #e7e2d6;white-space:nowrap}
+.rep tr:last-child td{border-bottom:0}
+.rep .id{font-weight:600}
+.spark{display:inline-flex;gap:3px;align-items:flex-end;height:22px;vertical-align:middle}
+.spark i{width:7px;border-radius:1px;background:#9fb79f}
+.spark.lo i{background:#d0b07a}.spark.bad i{background:#c99581}
+/* blocks */
+.block{padding:104px 0 96px;border-top:1px solid var(--line)}
+.block:nth-of-type(odd){background:var(--paper-2)}
+.story{max-width:760px;margin:0 0 40px}
+.num{font:italic 400 16px/1 var(--serif);color:var(--ink-3);margin:0 0 18px}
+.prob{font:400 italic 22px/1.4 var(--serif);color:var(--rust);margin:0 0 10px}
+.ben{font-size:clamp(32px,3.8vw,46px);line-height:1.08}
+.act{margin-top:32px}
+/* evidence pack */
+.pack{display:grid;grid-template-columns:1.25fr 1fr}
+.tiles{padding:22px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;border-right:1px solid var(--line)}
+.tile{position:relative;aspect-ratio:1/1;border-radius:6px;overflow:hidden;border:1px solid #c9c2b0}
+.tile span{position:absolute;left:6px;bottom:6px;background:rgba(20,24,21,.72);color:#fff;font:600 11px/1 var(--sans);padding:4px 6px;border-radius:3px}
+.tile svg{display:block;width:100%;height:100%}
+.side{padding:22px 26px;display:flex;flex-direction:column;gap:18px}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:8px 16px;font-size:14px}
+.kv dt{color:var(--ink-3)}.kv dd{margin:0;font-weight:600}
+.chart{border:1px solid var(--line);border-radius:6px;padding:12px 14px;background:#fff}
+.chart small{font-size:12px;color:var(--ink-3)}
+/* deadlines */
+.lanes{padding:8px 0}
+.lane{display:grid;grid-template-columns:190px 1fr;align-items:center;gap:18px;padding:16px 22px;border-bottom:1px solid #e7e2d6}
+.lane:last-child{border-bottom:0}
+.lane h4{margin:0;font:500 20px/1.2 var(--serif)}.lane h4 small{display:block;font:400 12.5px/1.4 var(--sans);color:var(--ink-3)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font:600 12.5px/1 var(--sans);padding:8px 10px;border-radius:5px;border:1px solid}
+.c1{color:var(--green-d);background:var(--green-t);border-color:#bfd1ba}.c2{color:#7a4f0c;background:var(--amber-t);border-color:#e4cf9f}.c3{color:var(--rust);background:var(--rust-t);border-color:#e3bfb1}
+.legend{display:flex;gap:16px;flex-wrap:wrap;padding:14px 22px;border-top:1px solid var(--line);font-size:13px;color:var(--ink-2);background:#f8f6f0}
+/* DSA plan */
+.plan{display:grid;grid-template-columns:1fr 1fr}
+.plan > div{padding:22px 26px}.plan > div+div{border-left:1px solid var(--line)}
+.plan h4{margin:0 0 14px;font:600 12px/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.plan ul{list-style:none;margin:0;padding:0}
+.plan li{display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line);font-size:15px}
+.plan li:last-child{border-bottom:0}
+.st{font:600 12px/1 var(--sans);padding:5px 8px;border-radius:4px;white-space:nowrap}
+.st.r{background:var(--green-t);color:var(--green-d)}.st.f{background:#e9e4f2;color:#4b3a74}
+/* proof */
+.proof{padding:64px 0;border-top:1px solid var(--line)}
+.ph{border:2px dashed #a99f88;border-radius:10px;padding:24px;color:var(--ink-2);font-size:15px;background:repeating-linear-gradient(-45deg,transparent 0 12px,rgba(169,159,136,.08) 12px 24px)}
+.ph strong{color:var(--ink)}
+/* form */
+.signup{padding:96px 0;border-top:1px solid var(--line)}
+.signup .wrap{display:grid;grid-template-columns:.85fr 1.15fr;gap:64px;align-items:start}
+.signup h2{font-size:clamp(34px,4vw,46px);line-height:1.08}
+.signup .lead{color:var(--ink-2);margin:18px 0 0}
+.formcard{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:32px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.field{display:flex;flex-direction:column;gap:6px}.field.full{grid-column:1/-1}
+label{font-weight:600;font-size:14px}.opt{font-weight:400;color:var(--ink-2)}
+input,select{font:inherit;font-size:16px;color:var(--ink);background:#fff;border:1px solid #b9b2a2;border-radius:6px;padding:11px 12px;width:100%}
+input:not([type=file]):not([type=checkbox]),select{height:46px}
+input[type=file]{padding:9px;background:var(--paper)}
+input:focus,select:focus{border-color:var(--green);outline:3px solid rgba(44,90,57,.25);outline-offset:0}
+.hint{font-size:13px;color:var(--ink-2)}.err{font-size:13px;color:#9b1c1c}
+.invalid input,.invalid select{border-color:#9b1c1c}
+.check{display:flex;gap:10px;align-items:flex-start;font-weight:400;font-size:15px}
+.check input{width:18px;height:18px;margin-top:3px;accent-color:var(--green)}
+.form-actions{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:24px}
+.form-summary{font-size:14px;color:#9b1c1c}
+.fine{font-size:13px;color:var(--ink-2);margin:18px 0 0}
+.thanks h3{font-size:32px;margin-bottom:12px}.thanks p{color:var(--ink-2)}
+footer{border-top:1px solid var(--line);padding:36px 0 48px;font-size:13.5px;color:var(--ink-2)}
+footer p{margin:0 0 10px;max-width:64em}
+.fn{margin:18px 0 0;padding:16px 0 0;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-3)}
+.fn ol{margin:6px 0 0;padding-left:18px}.fn li{margin:3px 0}
+@media (max-width:900px){
+ .hero{padding:52px 0 0}.hero .lede{grid-template-columns:1fr;gap:20px;margin-bottom:36px}
+ .block{padding:64px 0}
+ .pack,.plan{grid-template-columns:1fr}.tiles{border-right:0;border-bottom:1px solid var(--line)}
+ .plan > div+div{border-left:0;border-top:1px solid var(--line)}
+ .signup .wrap{grid-template-columns:1fr;gap:32px}
+ .lane{grid-template-columns:1fr;gap:10px}
+}
+@media (max-width:560px){
+ body{font-size:16px}.wrap{padding:0 18px}.tag{display:none}
+ header.top .btn{padding:9px 12px;font-size:13px}
+ .sum{grid-template-columns:1fr 1fr}.sum div:nth-child(3){border-left:0}.sum div:nth-child(n+3){border-top:1px solid var(--line)}
+ .sum strong{font-size:24px}
+ .mbar{flex-wrap:wrap;padding:10px 14px}
+ .tiles{grid-template-columns:repeat(3,1fr);gap:8px;padding:14px}
+ .grid2{grid-template-columns:1fr}.formcard{padding:22px}
+ .prob{font-size:19px}
+}
+@media (max-width:560px){
+ table.rep{min-width:0}.rep th:nth-child(2),.rep td:nth-child(2),.rep th:nth-child(4),.rep td:nth-child(4),.rep th:nth-child(5),.rep td:nth-child(5){display:none}
+ .rep th,.rep td{padding:11px 12px}
+ .sum .tier{font-size:11px;padding:5px 7px;white-space:normal}
+ .plan li{align-items:center}
+ .rep .tier{font-size:11px;padding:5px 7px}.rep td:last-child{white-space:normal}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap">
+  <a class="logo" href="#top" aria-label="ReclaimReady, back to top"><svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><rect x="1" y="1" width="24" height="24" rx="5" fill="#2c5a39"/><path d="M7 17.5c4-.5 7-3.5 8.5-9.5M9.5 9.5c2 0 3 1 3.5 2.5" stroke="#f5f2ea" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M6 19.5h14" stroke="#f5f2ea" stroke-width="2" stroke-linecap="round"/></svg>ReclaimReady <span class="tag">Early concept</span></a>
+  <a class="btn sm" href="#check" data-cta="nav">Get a free readiness check</a>
+</div></header>
+
+<main id="main">
+<section class="hero" id="top" aria-labelledby="h1">
+  <div class="wrap">
+    <div class="lede">
+      <h1 id="h1">Know which wellsites will pass before you send a crew.</h1>
+      <div>
+        <p class="sub">ReclaimReady screens your inactive inventory with multi-year satellite and LiDAR evidence, ranks every site by DSA readiness, and lines it up against your Directive&nbsp;088 deadlines.<sup><a href="#fn1" aria-label="Source 1">1</a></sup></p>
+        <div class="ctas">
+          <a class="btn" href="#check" data-cta="hero">Get a free readiness check on 50 of your sites <span aria-hidden="true">→</span></a>
+          <a class="link2" href="#check" data-prefer-call="prefer-call" data-cta="hero_call">Or book a 20-minute call</a>
+        </div>
+      </div>
+    </div>
+    <figure class="mock" style="margin:0" aria-label="Illustrative readiness report with fictional sites">
+      <div class="mbar"><span><b>Readiness report</b> · Sample inventory · 50 sites</span><span class="sample">Illustrative — not real data</span></div>
+      <div class="sum">
+        <div><small>Sites screened</small><strong>50</strong></div>
+        <div><small><span class="tier t1">Ready for DSA</span></small><strong>18</strong></div>
+        <div><small><span class="tier t2">Needs another season</span></small><strong>21</strong></div>
+        <div><small><span class="tier t3">Needs intervention</span></small><strong>11</strong></div>
+      </div>
+      <div class="scroll"><table class="rep">
+        <thead><tr><th>Site</th><th>Reclaimed</th><th>D088 deadline</th><th>Vegetation trend, 2019–2025</th><th>Evidence</th><th>Readiness</th></tr></thead>
+        <tbody>
+          <tr><td class="id">Site A-07</td><td>2018</td><td>Dec 31, 2026</td><td><span class="spark" aria-hidden="true"><i style="height:6px"></i><i style="height:9px"></i><i style="height:11px"></i><i style="height:14px"></i><i style="height:17px"></i><i style="height:19px"></i><i style="height:21px"></i></span></td><td>Satellite · LiDAR</td><td><span class="tier t1">Ready for DSA</span></td></tr>
+          <tr><td class="id">Site A-12</td><td>2019</td><td>Dec 31, 2026</td><td><span class="spark" aria-hidden="true"><i style="height:5px"></i><i style="height:8px"></i><i style="height:12px"></i><i style="height:13px"></i><i style="height:16px"></i><i style="height:18px"></i><i style="height:19px"></i></span></td><td>Satellite · LiDAR</td><td><span class="tier t1">Ready for DSA</span></td></tr>
+          <tr><td class="id">Site B-03</td><td>2021</td><td>Dec 31, 2026</td><td><span class="spark lo" aria-hidden="true"><i style="height:4px"></i><i style="height:5px"></i><i style="height:5px"></i><i style="height:8px"></i><i style="height:9px"></i><i style="height:11px"></i><i style="height:12px"></i></span></td><td>Satellite</td><td><span class="tier t2">Needs another season</span></td></tr>
+          <tr><td class="id">Site C-21</td><td>2017</td><td>Dec 31, 2027</td><td><span class="spark bad" aria-hidden="true"><i style="height:9px"></i><i style="height:8px"></i><i style="height:7px"></i><i style="height:7px"></i><i style="height:6px"></i><i style="height:6px"></i><i style="height:5px"></i></span></td><td>Satellite · LiDAR</td><td><span class="tier t3">Needs intervention</span></td></tr>
+          <tr><td class="id">Site C-30</td><td>2018</td><td>Dec 31, 2027</td><td><span class="spark" aria-hidden="true"><i style="height:7px"></i><i style="height:10px"></i><i style="height:12px"></i><i style="height:15px"></i><i style="height:16px"></i><i style="height:18px"></i><i style="height:20px"></i></span></td><td>Satellite · LiDAR</td><td><span class="tier t1">Ready for DSA</span></td></tr>
+        </tbody>
+      </table></div>
+    </figure>
+  </div>
+</section>
+
+<section class="block" aria-labelledby="b1">
+  <div class="wrap">
+    <div class="story">
+      <p class="num" aria-hidden="true">01</p>
+      <p class="prob">We send DSA crews to sites that aren’t ready.<sup><a href="#fn2" aria-label="Source 2">2</a></sup></p>
+      <h2 class="ben" id="b1">Send crews only where they’ll certify.</h2>
+    </div>
+    <figure class="mock" style="margin:0" aria-label="Illustrative evidence pack for fictional Site A-07">
+      <div class="mbar"><span><b>Evidence pack</b> · Site A-07</span><span class="sample">Illustrative — not real data</span></div>
+      <div class="pack">
+        <div class="tiles" aria-hidden="true">
+          <div class="tile"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><rect width="100" height="100" fill="#9c8f6e"/><rect x="22" y="24" width="56" height="50" fill="#b9a983"/><path d="M0 82 L100 70" stroke="#d8ccb0" stroke-width="5"/><circle cx="38" cy="44" r="3" fill="#7d8f5f"/><circle cx="60" cy="58" r="2.5" fill="#7d8f5f"/></svg><span>2019</span></div>
+          <div class="tile"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><rect width="100" height="100" fill="#8a8c62"/><rect x="22" y="24" width="56" height="50" fill="#a5a275"/><path d="M0 82 L100 70" stroke="#d1c6a8" stroke-width="5"/><circle cx="34" cy="40" r="4" fill="#64804b"/><circle cx="58" cy="56" r="4" fill="#64804b"/><circle cx="66" cy="36" r="3" fill="#64804b"/><circle cx="44" cy="62" r="3" fill="#64804b"/></svg><span>2021</span></div>
+          <div class="tile"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><rect width="100" height="100" fill="#6f8150"/><rect x="22" y="24" width="56" height="50" fill="#8a9561"/><path d="M0 82 L100 70" stroke="#cbc1a3" stroke-width="5"/><g fill="#4f6d3c"><circle cx="32" cy="38" r="5"/><circle cx="56" cy="54" r="6"/><circle cx="68" cy="34" r="5"/><circle cx="42" cy="62" r="5"/><circle cx="50" cy="32" r="4"/></g></svg><span>2023</span></div>
+          <div class="tile"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><rect width="100" height="100" fill="#5f7745"/><rect x="22" y="24" width="56" height="50" fill="#6f8650"/><path d="M0 82 L100 70" stroke="#c7bd9f" stroke-width="5"/><g fill="#3f5d31"><circle cx="30" cy="36" r="7"/><circle cx="56" cy="54" r="8"/><circle cx="70" cy="34" r="6"/><circle cx="40" cy="62" r="7"/><circle cx="50" cy="30" r="6"/><circle cx="66" cy="66" r="5"/></g></svg><span>2025</span></div>
+          <div class="tile"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><defs><linearGradient id="hs" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e9e6df"/><stop offset="1" stop-color="#8f8b82"/></linearGradient></defs><rect width="100" height="100" fill="url(#hs)"/><g fill="none" stroke="#6d695f" stroke-width=".8" opacity=".7"><path d="M0 20 Q50 10 100 24"/><path d="M0 38 Q50 30 100 42"/><path d="M0 56 Q50 50 100 60"/><path d="M0 74 Q50 70 100 78"/></g><rect x="22" y="24" width="56" height="50" fill="none" stroke="#2c5a39" stroke-width="1.5" stroke-dasharray="3 2"/></svg><span>LiDAR terrain</span></div>
+          <div class="tile"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><rect width="100" height="100" fill="#efe9dc"/><g fill="#2c5a39" opacity=".85"><rect x="12" y="62" width="10" height="26"/><rect x="28" y="54" width="10" height="34"/><rect x="44" y="44" width="10" height="44"/><rect x="60" y="34" width="10" height="54"/><rect x="76" y="26" width="10" height="62"/></g></svg><span>Woody cover</span></div>
+        </div>
+        <div class="side">
+          <div><span class="tier t1">Ready for DSA</span></div>
+          <dl class="kv"><dt>Reclaimed</dt><dd>2018</dd><dt>Deadline</dt><dd>Dec 31, 2026</dd><dt>Imagery</dt><dd>7 seasons, 2019–2025</dd><dt>Terrain</dt><dd>No anomalies flagged</dd></dl>
+          <div class="chart"><small>Woody stem distribution vs. off-site reference</small>
+            <svg viewBox="0 0 300 70" width="100%" height="70" aria-hidden="true"><path d="M0 60 C60 55 100 40 150 30 S240 14 300 12" fill="none" stroke="#2c5a39" stroke-width="2.5"/><path d="M0 22 L300 22" stroke="#9a6512" stroke-dasharray="4 4"/></svg>
+          </div>
+        </div>
+      </div>
+    </figure>
+    <div class="act"><a class="btn" href="#check" data-cta="b1">Get evidence packs for 50 sites</a></div>
+  </div>
+</section>
+
+<section class="block" aria-labelledby="b2">
+  <div class="wrap">
+    <div class="story">
+      <p class="num" aria-hidden="true">02</p>
+      <p class="prob">December 31 comes fast, and the quota doesn’t move.<sup><a href="#fn1" aria-label="Source 1">1</a>,<a href="#fn3" aria-label="Source 3">3</a></sup></p>
+      <h2 class="ben" id="b2">Plan the season against your deadlines.</h2>
+    </div>
+    <figure class="mock" style="margin:0" aria-label="Illustrative deadline view with fictional sites">
+      <div class="mbar"><span><b>D088 deadlines</b> · Sample inventory</span><span class="sample">Illustrative — not real data</span></div>
+      <div class="lanes">
+        <div class="lane"><h4>Dec 31, 2026<small>This season</small></h4><div class="chips"><span class="chip c1">A-07</span><span class="chip c1">A-12</span><span class="chip c1">A-15</span><span class="chip c2">B-03</span><span class="chip c2">B-09</span><span class="chip c3">B-14</span></div></div>
+        <div class="lane"><h4>Dec 31, 2027<small>Next season</small></h4><div class="chips"><span class="chip c1">C-30</span><span class="chip c1">C-33</span><span class="chip c2">C-02</span><span class="chip c2">C-18</span><span class="chip c2">C-26</span><span class="chip c3">C-21</span><span class="chip c3">C-40</span></div></div>
+        <div class="lane"><h4>Dec 31, 2028<small>Extended timeline sites</small></h4><div class="chips"><span class="chip c1">D-04</span><span class="chip c2">D-11</span><span class="chip c2">D-19</span><span class="chip c2">D-22</span><span class="chip c3">D-27</span></div></div>
+      </div>
+      <div class="legend"><span class="tier t1">Ready for DSA</span><span class="tier t2">Needs another season</span><span class="tier t3">Needs intervention</span></div>
+    </figure>
+    <div class="act"><a class="btn" href="#check" data-cta="b2">See your Dec 31 sites</a></div>
+  </div>
+</section>
+
+<section class="block" aria-labelledby="b3">
+  <div class="wrap">
+    <div class="story">
+      <p class="num" aria-hidden="true">03</p>
+      <p class="prob">Satellites can’t do the DSA for us.<sup><a href="#fn2" aria-label="Source 2">2</a></sup></p>
+      <h2 class="ben" id="b3">Evidence your consultant can plan the DSA with.</h2>
+    </div>
+    <figure class="mock" style="margin:0" aria-label="Illustrative DSA planning sheet for fictional Site A-07">
+      <div class="mbar"><span><b>DSA planning sheet</b> · Site A-07 · for your consultant</span><span class="sample">Illustrative — not real data</span></div>
+      <div class="plan">
+        <div><h4>Screened remotely</h4><ul>
+          <li>Woody stem distribution <span class="st r">Evidence attached</span></li>
+          <li>Topographic anomalies <span class="st r">Evidence attached</span></li>
+          <li>Stem counts <span class="st r">Evidence attached</span></li>
+        </ul></div>
+        <div><h4>Confirm in the field</h4><ul>
+          <li>Herbaceous species <span class="st f">Field DSA</span></li>
+          <li>Soils <span class="st f">Field DSA</span></li>
+          <li>OneStop entry <span class="st f">Consultant</span></li>
+        </ul></div>
+      </div>
+    </figure>
+    <div class="act"><a class="btn" href="#check" data-cta="b3">Plan DSAs with the evidence</a></div>
+  </div>
+</section>
+
+<section class="proof" aria-labelledby="proof-h">
+  <div class="wrap">
+    <h2 id="proof-h" class="tag" style="display:inline-block;margin-bottom:14px">Proof</h2>
+    <div class="ph" role="note"><strong>[Placeholder: pilot results and customer quotes, to be added only once real.]</strong> No customers yet.</div>
+  </div>
+</section>
+
+<section class="signup" id="check" aria-labelledby="check-h">
+  <div class="wrap">
+    <div>
+      <h2 id="check-h">Get a free readiness check on 50 of your sites.</h2>
+      <p class="lead">Prefer to talk first? Tick the box for a 20-minute call.</p>
+    </div>
+    <div class="formcard">
+      <form data-fakedoor data-thanks="thanks" novalidate aria-describedby="form-note">
+        <input type="hidden" name="experiment" value="reclaimready">
+        <input type="hidden" name="utm_content" data-utm="utm_content">
+        <div class="grid2">
+          <div class="field"><label for="f-name">Name</label><input id="f-name" name="name" autocomplete="name" required data-label="Name" data-firstname aria-describedby="e-name"><span class="err" id="e-name" aria-live="polite"></span></div>
+          <div class="field"><label for="f-email">Work email</label><input id="f-email" name="email" type="email" autocomplete="email" required data-label="Work email" aria-describedby="e-email"><span class="err" id="e-email" aria-live="polite"></span></div>
+          <div class="field"><label for="f-co">Company</label><input id="f-co" name="company" autocomplete="organization" required data-label="Company" aria-describedby="e-co"><span class="err" id="e-co" aria-live="polite"></span></div>
+          <div class="field"><label for="f-role">Role</label><input id="f-role" name="role" autocomplete="organization-title" required data-label="Role" placeholder="e.g. Closure Manager" aria-describedby="e-role"><span class="err" id="e-role" aria-live="polite"></span></div>
+          <div class="field"><label for="f-sites">Number of inactive sites</label><input id="f-sites" name="inactive_sites" type="number" min="1" step="1" inputmode="numeric" required data-label="Number of inactive sites" aria-describedby="e-sites"><span class="err" id="e-sites" aria-live="polite"></span></div>
+          <div class="field"><label for="f-year">Nearest D088 deadline year</label>
+            <select id="f-year" name="d088_year" required data-label="Nearest D088 deadline year" aria-describedby="e-year">
+              <option value="">Select a year</option><option>2026</option><option>2027</option><option>2028</option><option>2029</option><option>2030 or later</option><option>Not sure</option>
+            </select><span class="err" id="e-year" aria-live="polite"></span></div>
+          <div class="field full"><label for="f-csv">Site list <span class="opt">(optional CSV)</span></label><input id="f-csv" name="site_list" type="file" accept=".csv,text/csv" aria-describedby="h-csv"><span class="hint" id="h-csv">One row per site, with a UWI or surface location.</span></div>
+          <div class="field full"><label class="check" for="prefer-call"><input id="prefer-call" name="prefer_call" type="checkbox"> I’d rather start with a 20-minute call</label></div>
+        </div>
+        <div class="form-actions">
+          <button class="btn" type="submit" data-cta="form">Get my free readiness check</button>
+          <span class="form-summary" role="alert"></span>
+        </div>
+        <p class="fine" id="form-note">Early concept. This form doesn’t send anything yet.</p>
+      </form>
+      <div class="thanks" id="thanks" tabindex="-1" role="status" hidden>
+        <h3>Thanks<span data-fill="name"></span>.</h3>
+        <p>ReclaimReady is an early concept. Nothing was sent and no file was uploaded from this page.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>ReclaimReady is in early access. Screening supports, and does not replace, regulator-required field assessments. Not affiliated with or endorsed by the Alberta Energy Regulator.</p>
+    <div class="fn" id="sources">Sources. Approach informed by Alberta’s PTAC/InnoTech remote-sensing reclamation study (2025).<sup><a href="#fn2" aria-label="Source 2">2</a></sup>
+      <ol>
+        <li id="fn1">AER, <a href="https://static.aer.ca/prd/documents/directives/Directive088.pdf" rel="noopener noreferrer">Directive 088</a>: one year to a reclamation certificate after closure nomination; deadlines fall on Dec 31.</li>
+        <li id="fn2">PTAC / InnoTech Alberta, <a href="https://ptac.org/wp-content/uploads/2026/09/24-rrrc-05-reclamation-certification-ptac-final-report-update-may-4-2026.pdf" rel="noopener noreferrer">reclamation certification remote-sensing study</a>: assessment “relies on extensive fieldwork”; remote sensing supports, not replaces, in-field assessment.</li>
+        <li id="fn3">AER, <a href="https://www.aer.ca/regulations-and-compliance-enforcement/liability-management-programs/inventory-reduction-program/closure-quotas" rel="noopener noreferrer">Closure quotas</a>: C$750M industry quota for 2026.</li>
+      </ol>
+    </div>
+  </div>
+</footer>
+<script>
+/* FAKE DOOR: nothing leaves the browser. No network requests, no storage.
+   Forms are validated locally, then replaced with a thank-you message. */
+(function () {
+  var EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  var params = new URLSearchParams(window.location.search);
+  document.querySelectorAll('input[data-utm]').forEach(function (el) {
+    el.value = params.get(el.getAttribute('data-utm')) || '';
+  });
+  function fieldError(field, msg) {
+    var wrap = field.closest('.field');
+    var err = wrap && wrap.querySelector('.err');
+    if (!err) return;
+    err.textContent = msg || '';
+    field.setAttribute('aria-invalid', msg ? 'true' : 'false');
+    wrap.classList.toggle('invalid', !!msg);
+  }
+  function check(field) {
+    var v = (field.value || '').trim();
+    var label = field.getAttribute('data-label') || 'This field';
+    if (field.type === 'checkbox' || field.type === 'file' || field.type === 'hidden') return true;
+    if (field.required && !v) { fieldError(field, label + ' is required.'); return false; }
+    if (v && field.type === 'email' && !EMAIL.test(v)) { fieldError(field, 'Enter a valid work email, like name@company.ca.'); return false; }
+    if (v && field.type === 'number') {
+      var n = Number(v), min = field.min !== '' ? Number(field.min) : -Infinity;
+      if (!isFinite(n) || n < min || Math.floor(n) !== n) { fieldError(field, 'Enter a whole number' + (isFinite(min) ? ' of ' + min + ' or more' : '') + '.'); return false; }
+    }
+    fieldError(field, '');
+    return true;
+  }
+  document.querySelectorAll('form[data-fakedoor]').forEach(function (form) {
+    var fields = Array.prototype.slice.call(form.querySelectorAll('input, select, textarea'));
+    fields.forEach(function (f) {
+      f.addEventListener('blur', function () { if (f.value) check(f); });
+      f.addEventListener('input', function () { if (f.getAttribute('aria-invalid') === 'true') check(f); });
+    });
+    var groups = form.querySelectorAll('fieldset[data-required-group]');
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var firstBad = null;
+      fields.forEach(function (f) { if (!check(f) && !firstBad) firstBad = f; });
+      groups.forEach(function (g) {
+        var any = g.querySelector('input:checked');
+        var err = g.querySelector('.err');
+        g.classList.toggle('invalid', !any);
+        if (err) err.textContent = any ? '' : (g.getAttribute('data-label') || 'Choose at least one option') + '.';
+        if (!any && !firstBad) firstBad = g.querySelector('input');
+      });
+      var summary = form.querySelector('.form-summary');
+      if (firstBad) {
+        if (summary) summary.textContent = 'Please fix the highlighted fields.';
+        firstBad.focus();
+        return;
+      }
+      var thanks = document.getElementById(form.getAttribute('data-thanks'));
+      var nameField = form.querySelector('[data-firstname]');
+      var emailField = form.querySelector('input[type=email]');
+      if (thanks) {
+        var first = nameField ? nameField.value.trim().split(/\s+/)[0] : '';
+        thanks.querySelectorAll('[data-fill=name]').forEach(function (n) { n.textContent = first ? ', ' + first : ''; });
+        thanks.querySelectorAll('[data-fill=email]').forEach(function (n) { n.textContent = emailField ? emailField.value.trim() : ''; });
+        form.hidden = true;
+        thanks.hidden = false;
+        thanks.focus();
+      }
+      form.reset(); /* nothing is kept */
+    });
+  });
+  document.querySelectorAll('[data-prefer-call]').forEach(function (a) {
+    a.addEventListener('click', function () {
+      var box = document.getElementById(a.getAttribute('data-prefer-call'));
+      if (box) box.checked = true;
+    });
+  });
+})();
+
+</script>
+</body>
+</html>

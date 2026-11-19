@@ -1,0 +1,450 @@
+<!doctype html>
+<html lang="en-CA">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Referral-Ready: ACO submissions that don't bounce</title>
+<meta name="description" content="Pre-checks for Alberta ACO applications: legal locations, project geometry and package completeness. Early concept.">
+<!-- FAKE-DOOR PROTOTYPE. Local file only. No analytics, no external requests; forms send nothing. All product visuals are illustrative mockups with fictional data. -->
+<style>
+@font-face{font-family:"Inter Tight";src:url(assets/intertight.woff2) format("woff2");font-weight:100 900;font-display:swap}
+@font-face{font-family:"Inter";src:url(assets/inter.woff2) format("woff2");font-weight:100 900;font-display:swap}
+:root{--bg:#fff;--bg-2:#f6f5f8;--ink:#17151c;--ink-2:#55515f;--ink-3:#716c7a;--line:#e4e1e9;--line-2:#cfcad7;
+--plum:#5b2b6e;--plum-d:#45204f;--plum-t:#f1eaf4;--ok:#1f6b45;--ok-t:#e3f2e9;--bad:#a3162b;--bad-t:#fbe7ea;--warn:#8a5a00;--warn-t:#fdf1d8;--sage:#eef1ec;
+--head:"Inter Tight","Inter",system-ui,sans-serif;--sans:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.55 var(--sans)}
+a{color:var(--plum);text-underline-offset:3px}
+:focus-visible{outline:2px solid var(--plum);outline-offset:3px;border-radius:3px}
+.skip{position:absolute;left:-9999px;top:8px;background:var(--plum);color:#fff;padding:8px 14px;z-index:10}.skip:focus{left:12px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 28px}
+.narrow{max-width:800px;margin:0 auto;padding:0 28px}
+h1,h2,h3{font-family:var(--head);margin:0;letter-spacing:-.025em;text-wrap:balance}
+sup a{font:600 11px/1 var(--sans);color:var(--ink-3);text-decoration:none;padding:0 1px}
+header.top{position:sticky;top:0;z-index:5;background:rgba(255,255,255,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+.logo{display:flex;align-items:center;gap:9px;font:650 17px/1 var(--head);color:var(--ink);text-decoration:none}
+.pill{font:500 12px/1 var(--sans);color:var(--ink-2);border:1px solid var(--line-2);padding:5px 9px;border-radius:99px}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--plum);color:#fff;font:600 15px/1 var(--sans);padding:13px 20px;border-radius:99px;text-decoration:none;border:0;cursor:pointer}
+.btn:hover{background:var(--plum-d);color:#fff}.btn.sm{padding:9px 15px;font-size:14px}
+/* hero */
+.hero{text-align:center;padding:96px 0 0;background:linear-gradient(#fff 0,#fff 55%,var(--bg-2) 55%)}
+.eyebrow{display:inline-block;font-size:14px;color:var(--ink-2);background:var(--bg-2);border:1px solid var(--line);border-radius:99px;padding:6px 14px;margin:0 0 26px}
+h1{font-size:clamp(42px,6.4vw,78px);line-height:1;font-weight:650}
+.sub{font-size:18.5px;color:var(--ink-2);max-width:34em;margin:24px auto 32px}
+.hero .mockwrap{margin-top:64px;padding-bottom:96px}
+/* mock shell */
+.mock{margin:0;text-align:left;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 1px 2px rgba(23,21,28,.04),0 30px 70px -40px rgba(45,25,60,.45)}
+.mbar{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:11px 16px;border-bottom:1px solid var(--line);background:#fbfafc;font-size:13px;color:var(--ink-2)}
+.mbar .dots{display:inline-flex;gap:6px;margin-right:10px;vertical-align:middle}.mbar .dots i{width:10px;height:10px;border-radius:50%;background:#e1dde6}
+.mbar b{color:var(--ink);font-weight:600}
+.sample{font:600 11px/1 var(--sans);letter-spacing:.05em;text-transform:uppercase;color:var(--warn);background:var(--warn-t);border:1px solid #efd9a6;padding:5px 8px;border-radius:5px;white-space:nowrap}
+.app{display:grid;grid-template-columns:210px 1fr 290px;min-height:420px}
+.files{border-right:1px solid var(--line);padding:14px 10px;font-size:13.5px;background:#fcfbfd}
+.files h4,.res h4{margin:0 8px 10px;font:600 11.5px/1 var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+.files ul{list-style:none;margin:0;padding:0}
+.files li{display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.files li.on{background:var(--plum-t);color:var(--plum-d);font-weight:600}
+.files .ext{font:600 10px/1 var(--mono);color:var(--ink-3);border:1px solid var(--line-2);border-radius:3px;padding:3px 4px;min-width:34px;text-align:center}
+.map{position:relative;background:#f7f6f2}
+.map svg{display:block;width:100%;height:100%}
+.res{border-left:1px solid var(--line);padding:16px 14px;display:flex;flex-direction:column;gap:10px}
+.status{display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px;padding:10px 12px;border-radius:8px;background:var(--bad-t);color:var(--bad)}
+.issue{border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-size:13.5px}
+.issue b{display:block;font-size:13.5px}
+.issue span{color:var(--ink-2)}
+.issue.ok{background:var(--ok-t);border-color:#c5e3d1}.issue.ok b{color:var(--ok)}
+.issue.x{border-left:3px solid var(--bad)}.issue.w{border-left:3px solid var(--warn)}
+/* blocks */
+.block{padding:104px 0}
+.block + .block{border-top:1px solid var(--line)}
+.story{text-align:center;max-width:720px;margin:0 auto 44px}
+.n{font:600 13px/1 var(--sans);color:var(--plum);margin:0 0 18px}
+.prob{font-size:19px;color:var(--ink-2);margin:0 0 10px}
+.ben{font-size:clamp(32px,4vw,48px);line-height:1.06;font-weight:650}
+.act{text-align:center;margin-top:36px}
+.scroll{overflow-x:auto}
+table.ll{width:100%;border-collapse:collapse;font-size:14.5px;min-width:640px}
+.ll th{text-align:left;font:600 12px/1 var(--sans);color:var(--ink-3);padding:12px 18px;border-bottom:1px solid var(--line);background:#fbfafc}
+.ll td{padding:13px 18px;border-bottom:1px solid var(--line);white-space:nowrap}
+.ll tr:last-child td{border-bottom:0}
+.ll .loc{font-family:var(--mono);font-size:13.5px}
+.tag{display:inline-flex;align-items:center;gap:6px;font:600 12.5px/1 var(--sans);padding:6px 9px;border-radius:99px}
+.tag.ok{background:var(--ok-t);color:var(--ok)}.tag.x{background:var(--bad-t);color:var(--bad)}.tag.w{background:var(--warn-t);color:var(--warn)}
+/* checklist */
+.cl{padding:8px 0}
+.prog{display:flex;align-items:center;gap:16px;padding:18px 22px;border-bottom:1px solid var(--line)}
+.prog .bar{flex:1;height:8px;border-radius:99px;background:var(--line)}
+.prog .bar i{display:block;height:100%;width:80%;border-radius:99px;background:var(--plum)}
+.prog b{font-size:14px;white-space:nowrap}
+.item{display:grid;grid-template-columns:28px 1fr auto;gap:14px;align-items:center;padding:14px 22px;border-bottom:1px solid var(--line)}
+.item:last-child{border-bottom:0}
+.ic{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:700}
+.ic.ok{background:var(--ok-t);color:var(--ok)}.ic.x{background:var(--bad-t);color:var(--bad)}
+.item span{color:var(--ink-3);font-size:13.5px}
+/* export */
+.exp{display:grid;grid-template-columns:.9fr 1.1fr}
+.formats{padding:22px;display:grid;grid-template-columns:1fr 1fr;gap:12px;border-right:1px solid var(--line);align-content:start}
+.fmt{border:1px solid var(--line);border-radius:10px;padding:14px}
+.fmt b{display:block;font-size:15px}.fmt span{font-size:13px;color:var(--ink-3)}
+.fmt.on{border-color:var(--plum);box-shadow:0 0 0 3px var(--plum-t)}
+pre{margin:0;padding:22px;font:400 13px/1.6 var(--mono);color:#2b2733;background:#fbfafc;overflow-x:auto}
+pre .k{color:var(--plum)}pre .s{color:#1f6b45}
+/* proof */
+.proof{padding:24px 0 80px}
+.ph{border:1.5px dashed #b8afc4;border-radius:14px;padding:22px 26px;color:var(--ink-2);font-size:15px;background:repeating-linear-gradient(-45deg,#fff 0 12px,#faf8fb 12px 24px)}
+.ph strong{color:var(--ink)}
+/* forms */
+.signup{padding:88px 0;background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.signup .head{text-align:center;margin-bottom:36px}
+.signup h2{font-size:clamp(32px,4vw,46px);line-height:1.08;font-weight:650}
+.formcard{background:#fff;border:1px solid var(--line);border-radius:16px;padding:36px;box-shadow:0 20px 40px -30px rgba(23,21,28,.3)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.field{display:flex;flex-direction:column;gap:6px}.field.full{grid-column:1/-1}
+label{font-weight:550;font-size:14px}.opt{font-weight:400;color:var(--ink-3)}
+input,select,textarea{font:inherit;font-size:16px;color:var(--ink);background:#fff;border:1px solid var(--line-2);border-radius:10px;padding:11px 13px;width:100%}
+input:not([type=file]):not([type=checkbox]),select{height:46px}
+textarea{min-height:96px;resize:vertical}
+input[type=file]{padding:9px;background:var(--bg-2)}
+input:focus,select:focus,textarea:focus{border-color:var(--plum);outline:3px solid rgba(91,43,110,.18);outline-offset:0}
+.hint{font-size:13px;color:var(--ink-3)}.err{font-size:13px;color:var(--bad)}
+.invalid input,.invalid select,.invalid textarea{border-color:var(--bad)}
+.form-actions{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:26px}
+.form-summary{font-size:14px;color:var(--bad)}
+.fine{font-size:13px;color:var(--ink-3);margin:16px 0 0}
+.thanks{text-align:center;padding:12px 0}.thanks h3{font-size:30px;font-weight:650;margin-bottom:10px}.thanks p{color:var(--ink-2);margin:0}
+.nations{padding:88px 0;background:var(--sage)}
+.nations .grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:56px;align-items:start}
+.nations .k{font:600 13px/1 var(--sans);color:#3f5a3a;margin:0 0 16px}
+.nations h2{font-size:clamp(28px,3.2vw,38px);line-height:1.12;font-weight:650}
+.nations p{color:#3f4a3d}
+.nations .formcard{border-color:#d6ddd2;box-shadow:none}
+.nations .btn{background:#2f4a2c}.nations .btn:hover{background:#22371f}
+footer{padding:36px 0 48px;font-size:13.5px;color:var(--ink-3)}
+footer p{margin:0 0 8px;max-width:70em}
+.fn{margin-top:16px;padding-top:14px;border-top:1px solid var(--line);font-size:12.5px}
+.fn ol{margin:6px 0 0;padding-left:18px}
+@media (max-width:980px){
+ .app{grid-template-columns:1fr 1fr}.files{display:none}.map{min-height:320px}
+}
+@media (max-width:860px){
+ .hero{padding:60px 0 0}.hero .mockwrap{margin-top:44px;padding-bottom:64px}
+ .block{padding:64px 0}
+ .exp{grid-template-columns:1fr}.formats{border-right:0;border-bottom:1px solid var(--line)}
+ .nations .grid{grid-template-columns:1fr;gap:28px}
+}
+@media (max-width:620px){
+ .wrap,.narrow{padding:0 18px}.pill{display:none}
+ header.top .btn{font-size:13px;padding:8px 12px}
+ .app{grid-template-columns:1fr}.res{border-left:0;border-top:1px solid var(--line)}.map{min-height:0}
+ .mbar{flex-wrap:wrap}.mbar .dots{display:none}
+ .grid2{grid-template-columns:1fr}.formcard{padding:22px}
+ .sub{font-size:17px}.hero .btn{width:100%;justify-content:center}
+ .item{grid-template-columns:24px 1fr}.item .tag{grid-column:2;justify-self:start}
+ .formats{grid-template-columns:1fr 1fr}
+}
+@media (max-width:620px){
+ table.ll{min-width:0}.ll th:nth-child(2),.ll td:nth-child(2),.ll th:nth-child(3),.ll td:nth-child(3){display:none}
+ .ll th,.ll td{padding:12px 14px}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap">
+  <a class="logo" href="#top" aria-label="Referral-Ready, back to top"><svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><rect x="1" y="1" width="20" height="20" rx="6" fill="#5b2b6e"/><path d="M6.5 11.3l3 3 6-6.6" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>Referral-Ready <span class="pill">Early concept</span></a>
+  <a class="btn sm" href="#precheck" data-cta="nav">Pre-check 5 submissions</a>
+</div></header>
+
+<main id="main">
+<section class="hero" id="top" aria-labelledby="h1">
+  <div class="wrap">
+    <p class="eyebrow">For Alberta land, regulatory &amp; consultation coordinators</p>
+    <h1 id="h1">ACO submissions<br>that don’t bounce.</h1>
+    <p class="sub">Check legal locations, project geometry and package completeness before you submit, then send a clean, standardized package Nations can review.</p>
+    <a class="btn" href="#precheck" data-cta="hero">Pre-check your next 5 ACO submissions, free</a>
+    <div class="mockwrap">
+      <figure class="mock" aria-label="Illustrative pre-check of a fictional application showing two issues">
+        <div class="mbar"><span><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><b>Pre-check</b> · Application RR-SAMPLE-014</span><span class="sample">Illustrative — not real data</span></div>
+        <div class="app">
+          <div class="files"><h4>Package</h4><ul>
+            <li><span class="ext">PDF</span>Application form</li>
+            <li class="on"><span class="ext">SHP</span>Project area</li>
+            <li><span class="ext">CSV</span>Legal locations</li>
+            <li><span class="ext">PDF</span>Site map</li>
+            <li><span class="ext">PDF</span>Consultation record</li>
+          </ul></div>
+          <div class="map"><svg viewBox="0 0 520 420" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Sample map: project area over a land grid, with one listed quarter outside it and one unlisted quarter inside it">
+            <rect width="520" height="420" fill="#f7f6f2"/>
+            <g stroke="#cfcab9" stroke-width="1">
+              <path d="M0 140H520M0 280H520M173 0V420M346 0V420"/>
+            </g>
+            <g stroke="#e4e0d3" stroke-width="1" stroke-dasharray="4 4"><path d="M0 70H520M0 210H520M0 350H520M86 0V420M259 0V420M432 0V420"/></g>
+            <rect x="346" y="140" width="86" height="70" fill="rgba(163,22,43,.10)" stroke="#a3162b" stroke-width="2" stroke-dasharray="6 4"/>
+            <path d="M262 146 L341 146 L341 345 L178 345 L178 286 L262 286 Z" fill="rgba(91,43,110,.18)" stroke="#5b2b6e" stroke-width="2.5"/>
+            <rect x="259" y="280" width="87" height="70" fill="rgba(138,90,0,.12)" stroke="#8a5a00" stroke-width="2" stroke-dasharray="6 4"/>
+            <g font-family="ui-monospace,Menlo,monospace" font-size="12" fill="#716c7a">
+              <text x="8" y="16">Sec 14</text><text x="181" y="16">Sec 15</text><text x="354" y="16">Sec 16</text>
+              <text x="8" y="156">Sec 11</text><text x="181" y="156">Sec 10</text><text x="354" y="156">Sec 9</text>
+              <text x="8" y="296">Sec 2</text><text x="181" y="296">Sec 3</text><text x="354" y="296">Sec 4</text>
+            </g>
+            <g font-family="Inter,system-ui,sans-serif" font-size="12.5" font-weight="600">
+              <text x="352" y="228" fill="#a3162b">NW 9: listed, outside</text>
+              <text x="262" y="368" fill="#8a5a00">NE 3: in area, not listed</text>
+              <text x="270" y="200" fill="#45204f">Project</text><text x="270" y="216" fill="#45204f">area</text>
+            </g>
+          </svg></div>
+          <div class="res"><h4>Results</h4>
+            <div class="status">● 2 issues before submitting</div>
+            <div class="issue x"><b>NW 9 listed, not in project area</b><span>Remove it or fix the shapefile.</span></div>
+            <div class="issue w"><b>NE 3 in project area, not listed</b><span>Add it to the legal locations.</span></div>
+            <div class="issue ok"><b>Package complete</b><span>5 of 5 documents present.</span></div>
+          </div>
+        </div>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="block" aria-labelledby="b1">
+  <div class="wrap">
+    <div class="story"><p class="n" aria-hidden="true">01</p>
+      <p class="prob">One wrong legal location and the application comes back.<sup><a href="#fn1" aria-label="Source 1">1</a></sup></p>
+      <h2 class="ben" id="b1">Catch it before the ACO does.</h2></div>
+    <figure class="mock" aria-label="Illustrative cross-check of fictional legal locations against the project area">
+      <div class="mbar"><span><b>Legal locations vs. project area</b> · RR-SAMPLE-014</span><span class="sample">Illustrative — not real data</span></div>
+      <div class="scroll"><table class="ll">
+        <thead><tr><th>Legal location (sample)</th><th>In list</th><th>In shapefile</th><th>Result</th></tr></thead>
+        <tbody>
+          <tr><td class="loc">NE 10</td><td>Yes</td><td>Yes</td><td><span class="tag ok">✓ Match</span></td></tr>
+          <tr><td class="loc">SE 10</td><td>Yes</td><td>Yes</td><td><span class="tag ok">✓ Match</span></td></tr>
+          <tr><td class="loc">NW 9</td><td>Yes</td><td>No</td><td><span class="tag x">✕ Listed, outside area</span></td></tr>
+          <tr><td class="loc">NE 3</td><td>No</td><td>Yes</td><td><span class="tag w">! In area, not listed</span></td></tr>
+          <tr><td class="loc">NW 3</td><td>Yes</td><td>Yes</td><td><span class="tag ok">✓ Match</span></td></tr>
+        </tbody>
+      </table></div>
+    </figure>
+    <div class="act"><a class="btn" href="#precheck" data-cta="b1">Check your legal locations</a></div>
+  </div>
+</section>
+
+<section class="block" aria-labelledby="b2" style="background:var(--bg-2)">
+  <div class="wrap">
+    <div class="story"><p class="n" aria-hidden="true">02</p>
+      <p class="prob">Every return restarts the review clock.<sup><a href="#fn1" aria-label="Source 1">1</a></sup></p>
+      <h2 class="ben" id="b2">Complete on the first pass.</h2></div>
+    <figure class="mock" aria-label="Illustrative completeness checklist for a fictional package">
+      <div class="mbar"><span><b>Completeness</b> · RR-SAMPLE-015</span><span class="sample">Illustrative — not real data</span></div>
+      <div class="cl">
+        <div class="prog"><div class="bar" aria-hidden="true"><i></i></div><b>4 of 5 ready</b></div>
+        <div class="item"><i class="ic ok" aria-hidden="true">✓</i><div>Application form<br><span>All required fields filled</span></div><span class="tag ok">Ready</span></div>
+        <div class="item"><i class="ic ok" aria-hidden="true">✓</i><div>Project area shapefile<br><span>Valid geometry, matches legal locations</span></div><span class="tag ok">Ready</span></div>
+        <div class="item"><i class="ic ok" aria-hidden="true">✓</i><div>Legal location list<br><span>Consistent with shapefile</span></div><span class="tag ok">Ready</span></div>
+        <div class="item"><i class="ic ok" aria-hidden="true">✓</i><div>Site map<br><span>Shows the same footprint</span></div><span class="tag ok">Ready</span></div>
+        <div class="item"><i class="ic x" aria-hidden="true">✕</i><div>Record of consultation<br><span>Needs update before submitting</span></div><span class="tag x">Fix</span></div>
+      </div>
+    </figure>
+    <div class="act"><a class="btn" href="#precheck" data-cta="b2">Check your next package</a></div>
+  </div>
+</section>
+
+<section class="block" aria-labelledby="b3">
+  <div class="wrap">
+    <div class="story"><p class="n" aria-hidden="true">03</p>
+      <p class="prob">Nations redraw your footprint before they can review it.<sup><a href="#fn2" aria-label="Source 2">2</a></sup></p>
+      <h2 class="ben" id="b3">Hand them a package that opens cleanly.</h2></div>
+    <figure class="mock" aria-label="Illustrative export of a standardized, machine-readable package">
+      <div class="mbar"><span><b>Export</b> · RR-SAMPLE-014 · standardized package</span><span class="sample">Illustrative — not real data</span></div>
+      <div class="exp">
+        <div class="formats">
+          <div class="fmt on"><b>GeoJSON</b><span>Footprint + attributes</span></div>
+          <div class="fmt"><b>Shapefile</b><span>Zipped, with .prj</span></div>
+          <div class="fmt"><b>KML</b><span>For quick viewing</span></div>
+          <div class="fmt"><b>PDF map</b><span>Same footprint, printable</span></div>
+        </div>
+<pre aria-label="Sample GeoJSON excerpt">{
+  <span class="k">"type"</span>: <span class="s">"Feature"</span>,
+  <span class="k">"properties"</span>: {
+    <span class="k">"application_id"</span>: <span class="s">"RR-SAMPLE-014"</span>,
+    <span class="k">"activity"</span>: <span class="s">"Sample surface disposition"</span>,
+    <span class="k">"legal_locations"</span>: [<span class="s">"NE 10"</span>, <span class="s">"SE 10"</span>,
+                        <span class="s">"NE 3"</span>, <span class="s">"NW 3"</span>],
+    <span class="k">"area_ha"</span>: 12.4,
+    <span class="k">"checked"</span>: <span class="s">"geometry, legal locations, completeness"</span>
+  },
+  <span class="k">"geometry"</span>: { <span class="k">"type"</span>: <span class="s">"Polygon"</span>, … }
+}</pre>
+      </div>
+    </figure>
+    <div class="act"><a class="btn" href="#precheck" data-cta="b3">Pre-check 5 submissions, free</a></div>
+  </div>
+</section>
+
+<section class="proof" aria-labelledby="proof-h">
+  <div class="narrow">
+    <h2 id="proof-h" style="font:600 13px/1 var(--sans);margin:0 0 14px;color:var(--ink-3);letter-spacing:0">Proof</h2>
+    <div class="ph" role="note"><strong>[Placeholder: pilot results from proponents or consultancies, to be added only once real.]</strong> No customers or Nation partners yet.</div>
+  </div>
+</section>
+
+<section class="signup" id="precheck" aria-labelledby="pc-form-h">
+  <div class="narrow">
+    <div class="head">
+      <h2 id="pc-form-h">Pre-check your next 5 ACO submissions, free.</h2>
+      
+    </div>
+    <div class="formcard">
+      <form data-fakedoor data-thanks="thanks" novalidate>
+        <input type="hidden" name="experiment" value="referral-ready">
+        <input type="hidden" name="utm_content" data-utm="utm_content">
+        <div class="grid2">
+          <div class="field"><label for="f-name">Name</label><input id="f-name" name="name" autocomplete="name" required data-label="Name" data-firstname aria-describedby="e-name"><span class="err" id="e-name" aria-live="polite"></span></div>
+          <div class="field"><label for="f-email">Work email</label><input id="f-email" name="email" type="email" autocomplete="email" required data-label="Work email" aria-describedby="e-email"><span class="err" id="e-email" aria-live="polite"></span></div>
+          <div class="field"><label for="f-org">Organization</label><input id="f-org" name="organization" autocomplete="organization" required data-label="Organization" aria-describedby="e-org"><span class="err" id="e-org" aria-live="polite"></span></div>
+          <div class="field"><label for="f-role">Role</label><input id="f-role" name="role" autocomplete="organization-title" required data-label="Role" placeholder="e.g. Land Agent" aria-describedby="e-role"><span class="err" id="e-role" aria-live="polite"></span></div>
+          <div class="field"><label for="f-vol">Applications per year</label>
+            <select id="f-vol" name="apps_per_year" required data-label="Applications per year" aria-describedby="e-vol">
+              <option value="">Select a range</option><option>1–10</option><option>11–50</option><option>51–200</option><option>More than 200</option>
+            </select><span class="err" id="e-vol" aria-live="polite"></span></div>
+          <div class="field"><label for="f-disp">Types of dispositions</label><input id="f-disp" name="dispositions" required data-label="Types of dispositions" placeholder="e.g. MSL, LOC, PIL" aria-describedby="e-disp"><span class="err" id="e-disp" aria-live="polite"></span></div>
+          <div class="field full"><label for="f-up">Upcoming application <span class="opt">(optional upload)</span></label><input id="f-up" name="upload" type="file" accept=".zip,.shp,.kml,.kmz,.pdf,.csv" aria-describedby="h-up"><span class="hint" id="h-up">A shapefile (zipped), KML, PDF or CSV.</span></div>
+        </div>
+        <div class="form-actions">
+          <button class="btn" type="submit" data-cta="form">Request my free pre-check</button>
+          <span class="form-summary" role="alert"></span>
+        </div>
+        <p class="fine">Early concept. This form doesn’t send anything yet.</p>
+      </form>
+      <div class="thanks" id="thanks" tabindex="-1" role="status" hidden>
+        <h3>Thanks<span data-fill="name"></span>.</h3>
+        <p>Referral-Ready is an early concept. Nothing was sent and no file was uploaded from this page.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="nations" id="nations" aria-labelledby="nat-h">
+  <div class="wrap grid">
+    <div>
+      <p class="k">For First Nation and Métis consultation offices</p>
+      <h2 id="nat-h">Work with us on the package format.</h2>
+      <p>If your office receives ACO referrals, help shape what a standard package should contain. No cost to consultation offices.</p>
+    </div>
+    <div class="formcard">
+      <form data-fakedoor data-thanks="thanks-n" novalidate>
+        <input type="hidden" name="experiment" value="referral-ready_nations">
+        <div class="grid2">
+          <div class="field"><label for="n-name">Name</label><input id="n-name" name="name" autocomplete="name" required data-label="Name" data-firstname aria-describedby="en-name"><span class="err" id="en-name" aria-live="polite"></span></div>
+          <div class="field"><label for="n-email">Email</label><input id="n-email" name="email" type="email" autocomplete="email" required data-label="Email" aria-describedby="en-email"><span class="err" id="en-email" aria-live="polite"></span></div>
+          <div class="field"><label for="n-org">Nation or organization</label><input id="n-org" name="organization" required data-label="Nation or organization" aria-describedby="en-org"><span class="err" id="en-org" aria-live="polite"></span></div>
+          <div class="field"><label for="n-role">Role <span class="opt">(optional)</span></label><input id="n-role" name="role"></div>
+          <div class="field full"><label for="n-msg">Anything you’d like us to know <span class="opt">(optional)</span></label><textarea id="n-msg" name="message"></textarea></div>
+        </div>
+        <div class="form-actions">
+          <button class="btn" type="submit" data-cta="nations">Get in touch</button>
+          <span class="form-summary" role="alert"></span>
+        </div>
+      </form>
+      <div class="thanks" id="thanks-n" tabindex="-1" role="status" hidden>
+        <h3>Thank you<span data-fill="name"></span>.</h3>
+        <p>This is an early concept, so nothing was sent from this page.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Referral-Ready is in early access. We don’t collect or analyze traditional-knowledge data. Consultation obligations remain with the Crown and the proponent. Not affiliated with or endorsed by the Aboriginal Consultation Office, the Government of Alberta, or any First Nation or Métis organization.</p>
+    <div class="fn" id="sources">Sources.
+      <ol>
+        <li id="fn1">ACO Bulletin, <a href="https://open.alberta.ca/dataset/629655b1-b09e-4efa-894c-08201dfbf0b6/resource/1d4ced9d-2b60-471e-8cc9-d70910f3fe02/download/ir-aco-bulletin-2026-06.pdf" rel="noopener noreferrer">June 2026</a>: the ACO returned about 29% of applications for more information in 2025-26; reasons include “errors with Alberta Township System (ATS) legal locations or project area.” Review windows are 4 working days (pre-consultation) and 10 (adequacy).</li>
+        <li id="fn2">Ecotrust Canada, <a href="https://ecotrust.ca/wp-content/uploads/2020/03/InformationDemocracy-2017-ReferralsSoftwareAnalysis.pdf" rel="noopener noreferrer">referrals software analysis (2017)</a>: consultation offices overlay referral shapefiles before assessing; standardization named as a barrier.</li>
+      </ol>
+    </div>
+  </div>
+</footer>
+<script>
+/* FAKE DOOR: nothing leaves the browser. No network requests, no storage.
+   Forms are validated locally, then replaced with a thank-you message. */
+(function () {
+  var EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  var params = new URLSearchParams(window.location.search);
+  document.querySelectorAll('input[data-utm]').forEach(function (el) {
+    el.value = params.get(el.getAttribute('data-utm')) || '';
+  });
+  function fieldError(field, msg) {
+    var wrap = field.closest('.field');
+    var err = wrap && wrap.querySelector('.err');
+    if (!err) return;
+    err.textContent = msg || '';
+    field.setAttribute('aria-invalid', msg ? 'true' : 'false');
+    wrap.classList.toggle('invalid', !!msg);
+  }
+  function check(field) {
+    var v = (field.value || '').trim();
+    var label = field.getAttribute('data-label') || 'This field';
+    if (field.type === 'checkbox' || field.type === 'file' || field.type === 'hidden') return true;
+    if (field.required && !v) { fieldError(field, label + ' is required.'); return false; }
+    if (v && field.type === 'email' && !EMAIL.test(v)) { fieldError(field, 'Enter a valid work email, like name@company.ca.'); return false; }
+    if (v && field.type === 'number') {
+      var n = Number(v), min = field.min !== '' ? Number(field.min) : -Infinity;
+      if (!isFinite(n) || n < min || Math.floor(n) !== n) { fieldError(field, 'Enter a whole number' + (isFinite(min) ? ' of ' + min + ' or more' : '') + '.'); return false; }
+    }
+    fieldError(field, '');
+    return true;
+  }
+  document.querySelectorAll('form[data-fakedoor]').forEach(function (form) {
+    var fields = Array.prototype.slice.call(form.querySelectorAll('input, select, textarea'));
+    fields.forEach(function (f) {
+      f.addEventListener('blur', function () { if (f.value) check(f); });
+      f.addEventListener('input', function () { if (f.getAttribute('aria-invalid') === 'true') check(f); });
+    });
+    var groups = form.querySelectorAll('fieldset[data-required-group]');
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var firstBad = null;
+      fields.forEach(function (f) { if (!check(f) && !firstBad) firstBad = f; });
+      groups.forEach(function (g) {
+        var any = g.querySelector('input:checked');
+        var err = g.querySelector('.err');
+        g.classList.toggle('invalid', !any);
+        if (err) err.textContent = any ? '' : (g.getAttribute('data-label') || 'Choose at least one option') + '.';
+        if (!any && !firstBad) firstBad = g.querySelector('input');
+      });
+      var summary = form.querySelector('.form-summary');
+      if (firstBad) {
+        if (summary) summary.textContent = 'Please fix the highlighted fields.';
+        firstBad.focus();
+        return;
+      }
+      var thanks = document.getElementById(form.getAttribute('data-thanks'));
+      var nameField = form.querySelector('[data-firstname]');
+      var emailField = form.querySelector('input[type=email]');
+      if (thanks) {
+        var first = nameField ? nameField.value.trim().split(/\s+/)[0] : '';
+        thanks.querySelectorAll('[data-fill=name]').forEach(function (n) { n.textContent = first ? ', ' + first : ''; });
+        thanks.querySelectorAll('[data-fill=email]').forEach(function (n) { n.textContent = emailField ? emailField.value.trim() : ''; });
+        form.hidden = true;
+        thanks.hidden = false;
+        thanks.focus();
+      }
+      form.reset(); /* nothing is kept */
+    });
+  });
+  document.querySelectorAll('[data-prefer-call]').forEach(function (a) {
+    a.addEventListener('click', function () {
+      var box = document.getElementById(a.getAttribute('data-prefer-call'));
+      if (box) box.checked = true;
+    });
+  });
+})();
+
+</script>
+</body>
+</html>
